@@ -103,7 +103,7 @@ describe("StakingToken20", () => {
         await stakingToken20.deployed()
         await token20
             .connect(admin)
-            .mint(stakingToken20.address, ethers.utils.parseEther("1000000"))
+            .mint(stakingToken20.address, ethers.utils.parseEther("100000"))
         await stakingToken20.connect(admin).startStaking()
         await token20
             .connect(admin)
