@@ -28,7 +28,7 @@ contract StakingToken20 is IStakingToken20, Ownable {
     uint256 public endTime;
 
     uint256 private _totalStaked;
-    uint256 private _precision = 10e6;
+    uint256 private _precision = 1e6;
 
     mapping(address => StakeInfo) public stakedUser;
     mapping(address => bool) private _staked;
@@ -115,6 +115,14 @@ contract StakingToken20 is IStakingToken20, Ownable {
         return _calcReward(_stakeHolder);
     }
 
+    function stakeInfoOf(address _stakeHolder)
+        external
+        view
+        returns (StakeInfo memory)
+    {
+        return stakedUser[_stakeHolder];
+    }
+
     function _claimReward() internal {
         _updateReward();
         uint256 reward = stakedUser[_msgSender()].rewardsToClaim;
@@ -150,8 +158,6 @@ contract StakingToken20 is IStakingToken20, Ownable {
         timeRemaining =
             stakingDuration -
             (endTime - stakedUser[_stakeHolder].userStartTime);
-        uint256 percentage = (_precision * (stakingDuration - timeRemaining)) /
-            stakingDuration;
         return
             (_precision * (stakingDuration - timeRemaining)) / stakingDuration;
     }

@@ -26,15 +26,29 @@ async function main() {
   //   await verify("0x8fa551BefF617D4A80509C28c220cE63d2bBcBE4", [])
   // }
 
-  // console.log("Deploying StakingToken20 Contract...")
-  // const StakingToken20 = await ethers.getContractFactory("StakingToken20");
-  // const stakingToken20 = await StakingToken20.deploy("0xcD7Ad6644869549532f78d66AB764623666E63a0");
-  // await stakingToken20.deployed();
-  // console.log("StakingToken20 Deployed Successfully to: ", stakingToken20.address);
+  console.log("Deploying StakingToken20 Contract...")
+  const StakingToken20 = await ethers.getContractFactory("StakingToken20");
+  const stakingToken20 = await StakingToken20.deploy(
+      "0xcD7Ad6644869549532f78d66AB764623666E63a0",
+      5,
+      5,
+      ethers.utils.parseEther("10000")
+  )
+  await stakingToken20.deployed();
+  const contractAddress = stakingToken20.address;1
+  console.log("StakingToken20 Deployed Successfully to: ", contractAddress);
+
+  
 
   if (network.config.chainId === 5 && process.env.ETHERSCAN_API_KEY) {
+    await stakingToken20.deployTransaction.wait(6)
     console.log("verify StakingToken20 contract...")
-    await verify("0x0aE7ff2FEa5c2EFBfb63f9847daCbf03070A2f25", ["0xcD7Ad6644869549532f78d66AB764623666E63a0"])
+    await verify(contractAddress, [
+        "0xcD7Ad6644869549532f78d66AB764623666E63a0",
+        5,
+        5,
+        ethers.utils.parseEther("10000")
+    ])
   }
 }
 

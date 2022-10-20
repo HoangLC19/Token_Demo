@@ -12,7 +12,7 @@ interface IStakingToken20 {
 
     function startStaking() external;
 
-    function deposit(uint256 _amount) external;
+    function deposit(uint256 _amount) external; 
 
     function withdraw() external;
 
